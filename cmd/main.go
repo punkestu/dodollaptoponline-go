@@ -1,18 +1,24 @@
 package main
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"github.com/punkestu/dodollaptoponline-go/internal/handlers"
-	"github.com/punkestu/dodollaptoponline-go/internal/repositories"
-	"github.com/punkestu/dodollaptoponline-go/internal/routes"
-	"github.com/punkestu/dodollaptoponline-go/internal/services"
+	"github.com/punkestu/dodollaptoponline-go/features/product"
+	"github.com/punkestu/dodollaptoponline-go/features/user"
 )
 
 func main() {
-	api := fiber.New()
+	wait := make(chan struct{})
 
-	userRoutes := routes.NewUserRoutes(handlers.NewUserHandlerImpl(services.NewUserService(repositories.NewUserRepoMock())))
-	api.Mount("/user", userRoutes)
+	go func() {
+		user := user.Init()
+		user.Listen(":3000")
+		wait <- struct{}{}
+	}()
 
-	api.Listen(":3000")
+	go func() {
+		product := product.Init()
+		product.Listen(":3001")
+		wait <- struct{}{}
+	}()
+
+	<-wait
 }

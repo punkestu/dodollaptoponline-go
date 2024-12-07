@@ -1,23 +1,21 @@
-package repositories
+package user
 
-import (
-	"github.com/punkestu/dodollaptoponline-go/internal/models"
-)
+import "github.com/punkestu/dodollaptoponline-go/utils/models"
 
 type UserRepoMockImpl struct {
-	users   []models.User
+	users   []User
 	counter int
 }
 
 func NewUserRepoMock() *UserRepoMockImpl {
 	return &UserRepoMockImpl{
-		users:   []models.User{},
+		users:   []User{},
 		counter: 0,
 	}
 }
 
-func (u *UserRepoMockImpl) GetUsers() ([]models.UserProfile, error) {
-	userProfiles := make([]models.UserProfile, len(u.users))
+func (u *UserRepoMockImpl) GetUsers() ([]UserProfile, error) {
+	userProfiles := make([]UserProfile, len(u.users))
 
 	for i, user := range u.users {
 		userProfiles[i] = user.ToUserProfile()
@@ -26,7 +24,7 @@ func (u *UserRepoMockImpl) GetUsers() ([]models.UserProfile, error) {
 	return userProfiles, nil
 }
 
-func (u *UserRepoMockImpl) GetUserByID(id int) (*models.User, error) {
+func (u *UserRepoMockImpl) GetUserByID(id int) (*User, error) {
 	for _, user := range u.users {
 		if user.ID == id {
 			return &user, nil
@@ -36,7 +34,7 @@ func (u *UserRepoMockImpl) GetUserByID(id int) (*models.User, error) {
 	return nil, models.NewError("user not found", 404)
 }
 
-func (u *UserRepoMockImpl) GetUserByUsername(username string) (*models.User, error) {
+func (u *UserRepoMockImpl) GetUserByUsername(username string) (*User, error) {
 	for _, user := range u.users {
 		if user.Username == username {
 			return &user, nil
@@ -46,8 +44,8 @@ func (u *UserRepoMockImpl) GetUserByUsername(username string) (*models.User, err
 	return nil, models.NewError("user not found", 404)
 }
 
-func (u *UserRepoMockImpl) InsertUser(user models.UserRegister) (int, error) {
-	newUser := models.User{
+func (u *UserRepoMockImpl) InsertUser(user UserRegister) (int, error) {
+	newUser := User{
 		ID:       u.counter,
 		Username: user.Username,
 		Password: user.Password,

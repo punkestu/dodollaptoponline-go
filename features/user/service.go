@@ -1,14 +1,12 @@
-package services
+package user
 
-import (
-	"github.com/punkestu/dodollaptoponline-go/internal/models"
-)
+import "github.com/punkestu/dodollaptoponline-go/utils/models"
 
 type UserRepository interface {
-	GetUsers() ([]models.UserProfile, error)
-	GetUserByID(id int) (*models.User, error)
-	GetUserByUsername(username string) (*models.User, error)
-	InsertUser(user models.UserRegister) (int, error)
+	GetUsers() ([]UserProfile, error)
+	GetUserByID(id int) (*User, error)
+	GetUserByUsername(username string) (*User, error)
+	InsertUser(user UserRegister) (int, error)
 }
 
 type UserServiceImpl struct {
@@ -21,7 +19,7 @@ func NewUserService(repo UserRepository) *UserServiceImpl {
 	}
 }
 
-func (u *UserServiceImpl) Login(credentials models.UserLogin) (*models.UserProfile, error) {
+func (u *UserServiceImpl) Login(credentials UserLogin) (*UserProfile, error) {
 	user, err := u.repo.GetUserByUsername(credentials.Username)
 	if err != nil {
 		return nil, err
@@ -36,7 +34,7 @@ func (u *UserServiceImpl) Login(credentials models.UserLogin) (*models.UserProfi
 	return &userProfile, nil
 }
 
-func (u *UserServiceImpl) Register(user models.UserRegister) (int, error) {
+func (u *UserServiceImpl) Register(user UserRegister) (int, error) {
 	_, err := u.repo.GetUserByUsername(user.Username)
 	if err == nil {
 		return 0, models.NewError("username already taken", 400)
@@ -45,7 +43,7 @@ func (u *UserServiceImpl) Register(user models.UserRegister) (int, error) {
 	return u.repo.InsertUser(user)
 }
 
-func (u *UserServiceImpl) GetProfile(id int) (*models.UserProfile, error) {
+func (u *UserServiceImpl) GetProfile(id int) (*UserProfile, error) {
 	user, err := u.repo.GetUserByID(id)
 	if err != nil {
 		return nil, err
