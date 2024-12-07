@@ -30,7 +30,7 @@ func (s *ProductServiceImpl) GetProduct(id int) (Product, error) {
 }
 
 func (s *ProductServiceImpl) AddProduct(token string, p ProductAdd) (Product, error) {
-	userID, err := TokenToUserID(token)
+	userID, err := models.TokenToUserID(token)
 	if err != nil {
 		return Product{}, err
 	}
@@ -39,7 +39,7 @@ func (s *ProductServiceImpl) AddProduct(token string, p ProductAdd) (Product, er
 }
 
 func (s *ProductServiceImpl) UpdateProduct(token string, id int, p ProductUpdate) (Product, error) {
-	userID, err := TokenToUserID(token)
+	userID, err := models.TokenToUserID(token)
 	if err != nil {
 		return Product{}, err
 	}
@@ -57,7 +57,7 @@ func (s *ProductServiceImpl) UpdateProduct(token string, id int, p ProductUpdate
 }
 
 func (s *ProductServiceImpl) DeleteProduct(token string, id int) error {
-	userID, err := TokenToUserID(token)
+	userID, err := models.TokenToUserID(token)
 	if err != nil {
 		return err
 	}
@@ -75,7 +75,7 @@ func (s *ProductServiceImpl) DeleteProduct(token string, id int) error {
 }
 
 func (s *ProductServiceImpl) UpdateStock(token string, id int, stock int) (Product, error) {
-	userID, err := TokenToUserID(token)
+	userID, err := models.TokenToUserID(token)
 	if err != nil {
 		return Product{}, err
 	}

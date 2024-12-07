@@ -5,10 +5,7 @@ import (
 )
 
 func Init() *fiber.App {
-	api := fiber.New()
-
 	productRoutes := NewProductRoutes(NewProductHandlerImpl(NewProductServiceImpl(NewProductRepositoryMock())))
-	api.Mount("/product", productRoutes)
 
-	return api
+	return productRoutes
 }

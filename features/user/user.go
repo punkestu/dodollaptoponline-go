@@ -5,10 +5,7 @@ import (
 )
 
 func Init() *fiber.App {
-	api := fiber.New()
+	userRoutes := NewUserRoutes(NewUserHandlerImpl(NewUserService(NewUserRepoMock())))
 
-	productRoutes := NewUserRoutes(NewUserHandlerImpl(NewUserService(NewUserRepoMock())))
-	api.Mount("/user", productRoutes)
-
-	return api
+	return userRoutes
 }
