@@ -24,3 +24,5 @@ go.work
 *.bak
 *.orig
 .DS_Store
+
+bin
