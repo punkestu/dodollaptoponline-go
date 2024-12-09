@@ -5,7 +5,7 @@ import (
 )
 
 func Init() *fiber.App {
-	productRoutes := NewProductRoutes(NewProductHandlerImpl(NewProductServiceImpl(NewProductRepositoryMock())))
+	productRoutes := NewProductRoutes(NewProductHandlerImpl(NewProductServiceImpl(NewProductRepositoryMysql())))
 
 	return productRoutes
 }
