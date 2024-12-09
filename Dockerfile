@@ -25,5 +25,7 @@ ENV DB_NAME=$DB_NAME
 ARG DB_URL
 ENV DB_URL=$DB_URL
 
+ENV PROD=true
+
 # Run the binary
-CMD ["PROD=true", "./go-api"]
+CMD ["./go-api"]
